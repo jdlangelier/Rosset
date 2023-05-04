@@ -1,0 +1,3 @@
+[submodule "Rosset/ThirdParties/spdlog"]
+	path = Rosset/ThirdParties/spdlog
+	url = https://github.com/gabime/spdlog.git
