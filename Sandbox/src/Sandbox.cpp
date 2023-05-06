@@ -3,16 +3,16 @@
 class Sandbox : public Rosset::Application
 {
 public:
-	Sandbox()
-	{
-	}
+    Sandbox()
+    {
+    }
 
-	~Sandbox()
-	{
-	}
+    ~Sandbox()
+    {
+    }
 };
 
 Rosset::Application* Rosset::CreateApplication()
 {
-	return new Sandbox();
+    return new Sandbox();
 }

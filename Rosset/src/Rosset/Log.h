@@ -4,18 +4,18 @@
 #include "spdlog/spdlog.h"
 
 namespace Rosset {
-	class RS_API Log
-	{
-	public:
-		static void Init();
+    class RS_API Log
+    {
+    public:
+        static void Init();
 
-		inline static std::shared_ptr<spdlog::logger>& GetEngineLogger() { return s_engineLogger; }
-		inline static std::shared_ptr<spdlog::logger>& GetAppLogger() { return s_appLogger; }
+        inline static std::shared_ptr<spdlog::logger>& GetEngineLogger() { return s_engineLogger; }
+        inline static std::shared_ptr<spdlog::logger>& GetAppLogger() { return s_appLogger; }
 
-	private:
-		static std::shared_ptr<spdlog::logger> s_engineLogger;
-		static std::shared_ptr<spdlog::logger> s_appLogger;
-	};
+    private:
+        static std::shared_ptr<spdlog::logger> s_engineLogger;
+        static std::shared_ptr<spdlog::logger> s_appLogger;
+    };
 }
 
 #define RS_ENGINE_TRACE(...) ::Rosset::Log::GetEngineLogger()->trace(__VA_ARGS__)

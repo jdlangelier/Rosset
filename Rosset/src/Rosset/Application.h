@@ -4,14 +4,14 @@
 
 namespace Rosset {
 
-	class RS_API Application
-	{
-	public:
-		Application();
-		virtual ~Application();
+    class RS_API Application
+    {
+    public:
+        Application();
+        virtual ~Application();
 
-		void Run();
-	};
+        void Run();
+    };
 
-	Application* CreateApplication();
+    Application* CreateApplication();
 }
