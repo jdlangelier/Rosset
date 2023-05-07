@@ -1,5 +1,6 @@
 workspace "Rosset"
     architecture "x64"
+    startproject "Sandbox"
 
     configurations
     {
@@ -25,6 +26,7 @@ project "Rosset"
 
     includedirs
     {
+        "%{prj.name}/src",
         "%{prj.name}/ThirdParties/spdlog/include"
     }
 
