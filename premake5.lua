@@ -1,10 +1,9 @@
 workspace "Rosset"
     architecture "x64"
     startproject "Sandbox"
-
     configurations { "Debug", "Release" }
 
-outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+    outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 project "Rosset"
     location "Rosset"
@@ -17,7 +16,10 @@ project "Rosset"
     pchheader "RsPreCompiledHeader.h"
     pchsource "%{prj.name}/src/RsPreCompiledHeader.cpp"
 
-    files { "%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp" }
+    files {
+        "%{prj.name}/src/**.h",
+         "%{prj.name}/src/**.cpp"
+    }
 
     includedirs {
         "%{prj.name}/src",
@@ -52,26 +54,25 @@ project "Sandbox"
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin/" .. outputdir .. "/%{prj.name}" .. "/obj")
 
-    files { "%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp" }
+    files {
+        "%{prj.name}/src/**.h",
+        "%{prj.name}/src/**.cpp"
+    }
 
     includedirs {
         "Rosset/ThirdParties/spdlog/include",
         "Rosset/src"
     }
 
-    links {
-        "Rosset"
-    }
+    links "Rosset"
 
     filter "system:windows"
         cppdialect "C++20"
         staticruntime "On"
         systemversion "latest"
 
-        defines {
-            "RS_PLATFORM_WINDOWS"
-        }
-
+        defines "RS_PLATFORM_WINDOWS"
+ 
     filter "configurations:Debug"
         defines "RS_DEBUG"
         symbols "On"
