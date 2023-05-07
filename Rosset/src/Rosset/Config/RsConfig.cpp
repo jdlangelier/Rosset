@@ -1,1 +1,1 @@
-#include "RsConfig.h"
+#include "Rosset/Config/RsConfig.h"
