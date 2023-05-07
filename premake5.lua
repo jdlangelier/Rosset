@@ -2,11 +2,7 @@ workspace "Rosset"
     architecture "x64"
     startproject "Sandbox"
 
-    configurations
-    {
-        "Debug",
-        "Release"
-    }
+    configurations { "Debug", "Release" }
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
@@ -16,19 +12,14 @@ project "Rosset"
     language "C++"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    objdir ("bin/int/" .. outputdir .. "/%{prj.name}")
+    objdir ("bin/" .. outputdir .. "/%{prj.name}" .. "/obj")
 
     pchheader "RsPreCompiledHeader.h"
     pchsource "%{prj.name}/src/RsPreCompiledHeader.cpp"
 
-    files
-    {
-        "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
-    }
+    files { "%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp" }
 
-    includedirs
-    {
+    includedirs {
         "%{prj.name}/src",
         "%{prj.name}/ThirdParties/spdlog/include"
     }
@@ -37,16 +28,13 @@ project "Rosset"
         cppdialect "C++20"
         staticruntime "On"
         systemversion "latest"
-        defines
-        {
+
+        defines {
             "RS_PLATFORM_WINDOWS",
             "RS_BUILD_DLL"
         }
 
-        postbuildcommands
-        {
-            ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
-        }
+        postbuildcommands { ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox") }
 
     filter "configurations:Debug"
         defines "RS_DEBUG"
@@ -62,22 +50,16 @@ project "Sandbox"
     language "C++"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    objdir ("bin/int/" .. outputdir .. "/%{prj.name}")
+    objdir ("bin/" .. outputdir .. "/%{prj.name}" .. "/obj")
 
-    files
-    {
-        "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
-    }
+    files { "%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp" }
 
-    includedirs
-    {
+    includedirs {
         "Rosset/ThirdParties/spdlog/include",
         "Rosset/src"
     }
 
-    links
-    {
+    links {
         "Rosset"
     }
 
@@ -85,8 +67,8 @@ project "Sandbox"
         cppdialect "C++20"
         staticruntime "On"
         systemversion "latest"
-        defines
-        {
+
+        defines {
             "RS_PLATFORM_WINDOWS"
         }
 
