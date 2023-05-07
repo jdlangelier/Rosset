@@ -1,5 +1,7 @@
 #pragma once
 
-#include "Rosset/Application.h"
-#include "Rosset/Log.h"
-#include "Rosset/EntryPoint.h"
+#include "Rosset/Config/RsConfig.h"
+
+#include "Rosset/Application/Application.h"
+#include "Rosset/Application/EntryPoint.h"
+#include "Rosset/Utils/Log.h"

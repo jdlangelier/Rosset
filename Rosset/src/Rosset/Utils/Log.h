@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Core.h"
+#include "Rosset/Config/RsConfig.h"
+
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
 
