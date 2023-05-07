@@ -2,8 +2,6 @@
 
 #include "Rosset/Events/Event.h"
 
-#include <sstream>
-
 namespace Rosset
 {
     class RS_API KeyEvent : public Event

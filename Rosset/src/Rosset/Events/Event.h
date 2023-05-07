@@ -2,8 +2,9 @@
 
 #include "Rosset/Core.h"
 
-#include <string>
+#if 0
 #include <functional>
+#endif
 
 #define EVENT_TYPE_FUNCTIONS(type) static EventType GetStaticType() { return EventType::##type; }\
                                virtual EventType GetEventType() const override { return GetStaticType(); }\

@@ -1,3 +1,5 @@
+#include "RsPreCompiledHeader.h"
+
 #include "Application.h"
 
 #include "Rosset/Events/KeyEvent.h"
