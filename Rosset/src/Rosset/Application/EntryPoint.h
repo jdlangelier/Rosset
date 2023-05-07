@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Rosset/Application/Application.h"
+#include "Rosset/Utils/Log.h"
+
 extern Rosset::Application* Rosset::CreateApplication();
 
 #ifdef RS_PLATFORM_WINDOWS

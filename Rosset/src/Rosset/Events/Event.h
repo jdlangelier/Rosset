@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Rosset/Core.h"
+#include "Rosset/Config/RsConfig.h"
 
 #if 0
 #include <functional>

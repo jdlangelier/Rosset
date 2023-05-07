@@ -13,8 +13,8 @@ project "Rosset"
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin/" .. outputdir .. "/%{prj.name}" .. "/obj")
 
-    pchheader "RsPreCompiledHeader.h"
-    pchsource "%{prj.name}/src/RsPreCompiledHeader.cpp"
+    pchheader "Rosset/Config/RsConfig.h"
+    pchsource "%{prj.name}/src/Rosset/Config/RsConfig.cpp"
 
     files {
         "%{prj.name}/src/**.h",

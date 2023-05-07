@@ -1,9 +1,6 @@
-#include "RsPreCompiledHeader.h"
+#include "Rosset/Config/RsConfig.h"
 
 #include "Application.h"
-
-#include "Rosset/Events/KeyEvent.h"
-#include "Rosset/Log.h"
 
 namespace Rosset{
 
@@ -17,9 +14,6 @@ namespace Rosset{
 
     void Application::Run()
     {
-        KeyPressedEvent e(1, 1);
-        RS_ENGINE_TRACE(e);
-
         while (true);
     }
 }
