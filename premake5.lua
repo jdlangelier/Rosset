@@ -51,7 +51,10 @@ project "Rosset"
         postbuildcommands { ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox") }
 
     filter "configurations:Debug"
-        defines "RS_DEBUG"
+        defines {
+            "RS_DEBUG",
+            "RS_ENABLE_ASSERTS"
+        }
         symbols "On"
 
     filter "configurations:Release"
@@ -87,7 +90,10 @@ project "Sandbox"
         defines "RS_PLATFORM_WINDOWS"
  
     filter "configurations:Debug"
-        defines "RS_DEBUG"
+        defines {
+            "RS_DEBUG",
+            "RS_ENABLE_ASSERTS"
+        }
         symbols "On"
 
     filter "configurations:Release"

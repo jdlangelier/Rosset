@@ -2,10 +2,12 @@
 
 #include "Application.h"
 
-namespace Rosset{
+namespace Rosset {
 
     Application::Application()
+        : m_bRunning(true)
     {
+        m_pWindow = std::unique_ptr<Window>(Window::Create());
     }
 
     Application::~Application()
@@ -14,6 +16,9 @@ namespace Rosset{
 
     void Application::Run()
     {
-        while (true);
+        while (m_bRunning)
+        {
+            m_pWindow->OnUpdate();
+        }
     }
 }
