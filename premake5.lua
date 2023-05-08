@@ -5,6 +5,12 @@ workspace "Rosset"
 
     outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+    IncludeDir = {}
+    IncludeDir["glfw"] =  "Rosset/ThirdParties/glfw/glfw/include"
+    IncludeDir["spdlog"] =  "Rosset/ThirdParties/spdlog/include"
+
+    include "Rosset/ThirdParties/glfw"
+
 project "Rosset"
     location "Rosset"
     kind "SharedLib"
@@ -18,12 +24,18 @@ project "Rosset"
 
     files {
         "%{prj.name}/src/**.h",
-         "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp"
     }
 
     includedirs {
         "%{prj.name}/src",
-        "%{prj.name}/ThirdParties/spdlog/include"
+        "%{IncludeDir.glfw}",
+        "%{IncludeDir.spdlog}"
+    }
+
+    links {
+        "GLFW",
+        "opengl32.lib"
     }
 
     filter "system:windows"
@@ -60,8 +72,9 @@ project "Sandbox"
     }
 
     includedirs {
-        "Rosset/ThirdParties/spdlog/include",
-        "Rosset/src"
+        "Rosset/src",
+        "%{IncludeDir.glfw}",
+        "%{IncludeDir.spdlog}"
     }
 
     links "Rosset"
