@@ -5,10 +5,19 @@ workspace "Rosset"
 
     outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+    IncludeDir = {}
+    IncludeDir["glfw"] =  "Rosset/ThirdParties/glfw/glfw/include"
+    IncludeDir["spdlog"] =  "Rosset/ThirdParties/spdlog/include"
+
+    group "Dependencies"
+        include "Rosset/ThirdParties/glfw"
+    group ""
+
 project "Rosset"
     location "Rosset"
     kind "SharedLib"
     language "C++"
+    staticruntime "off"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin/" .. outputdir .. "/%{prj.name}" .. "/obj")
@@ -18,12 +27,18 @@ project "Rosset"
 
     files {
         "%{prj.name}/src/**.h",
-         "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp"
     }
 
     includedirs {
         "%{prj.name}/src",
-        "%{prj.name}/ThirdParties/spdlog/include"
+        "%{IncludeDir.glfw}",
+        "%{IncludeDir.spdlog}"
+    }
+
+    links {
+        "GLFW",
+        "opengl32.lib"
     }
 
     filter "system:windows"
@@ -36,20 +51,23 @@ project "Rosset"
             "RS_BUILD_DLL"
         }
 
-        postbuildcommands { ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox") }
+        postbuildcommands { ("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"") }
 
     filter "configurations:Debug"
         defines "RS_DEBUG"
+        runtime "Debug"
         symbols "On"
 
     filter "configurations:Release"
         defines "RS_RELEASE"
+        runtime "Release"
         optimize "On"
 
 project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
     language "C++"
+    staticruntime "off"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin/" .. outputdir .. "/%{prj.name}" .. "/obj")
@@ -60,8 +78,9 @@ project "Sandbox"
     }
 
     includedirs {
-        "Rosset/ThirdParties/spdlog/include",
-        "Rosset/src"
+        "Rosset/src",
+        "%{IncludeDir.glfw}",
+        "%{IncludeDir.spdlog}"
     }
 
     links "Rosset"
@@ -75,8 +94,10 @@ project "Sandbox"
  
     filter "configurations:Debug"
         defines "RS_DEBUG"
+        runtime "Debug"
         symbols "On"
 
     filter "configurations:Release"
         defines "RS_RELEASE"
+        runtime "Release"
         optimize "On"
