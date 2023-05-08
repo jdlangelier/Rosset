@@ -10,14 +10,14 @@ namespace Rosset {
     public:
         struct WindowProperties
         {
-            std::string Title;
-            unsigned int Width;
-            unsigned int Height;
+            std::string strTitle;
+            unsigned int uWidth;
+            unsigned int uHeight;
 
             WindowProperties(const std::string& title = "Rosset",
                 unsigned int width = 1280,
                 unsigned int height = 720)
-                : Title(title), Width(width), Height(height) {}
+                : strTitle(title), uWidth(width), uHeight(height) {}
         };
 
         using EventCallbackFn = std::is_function<void(Event&)>;
@@ -29,10 +29,7 @@ namespace Rosset {
         virtual void OnUpdate() = 0;
         virtual unsigned int GetWidth() const = 0;
         virtual unsigned int GetHeight() const = 0;
-#if 0
-        virtual coit SetEventCallback(const EventCallbackFw& callback) = 0;
-#endif
-        virtual void SetVSync(bool enabled) = 0;
-        virtual bool IsVSync() const = 0;
+        virtual void SetVsync(bool bEnabled) = 0;
+        virtual bool IsVsync() const = 0;
     };
 }

@@ -11,12 +11,12 @@ namespace Rosset {
     public:
         static void Init();
 
-        inline static std::shared_ptr<spdlog::logger>& GetEngineLogger() { return s_engineLogger; }
-        inline static std::shared_ptr<spdlog::logger>& GetAppLogger() { return s_appLogger; }
+        inline static std::shared_ptr<spdlog::logger>& GetEngineLogger() { return ms_spEngineLogger; }
+        inline static std::shared_ptr<spdlog::logger>& GetAppLogger() { return ms_spAppLogger; }
 
     private:
-        static std::shared_ptr<spdlog::logger> s_engineLogger;
-        static std::shared_ptr<spdlog::logger> s_appLogger;
+        static std::shared_ptr<spdlog::logger> ms_spEngineLogger;
+        static std::shared_ptr<spdlog::logger> ms_spAppLogger;
     };
 }
 

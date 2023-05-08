@@ -12,8 +12,8 @@ int main(int argc, char** argv)
     RS_ENGINE_WARN("Logger!");
     RS_APP_INFO("Client!");
 
-    auto app = Rosset::CreateApplication();
-    app->Run();
-    delete app;
+    auto pApp = Rosset::CreateApplication();
+    pApp->Run();
+    delete pApp;
 }
 #endif

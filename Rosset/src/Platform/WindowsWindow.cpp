@@ -22,11 +22,11 @@ namespace Rosset {
 
     void WindowsWindow::Init(const WindowProperties& properties)
     {
-        m_Data.Title = properties.Title;
-        m_Data.Width = properties.Width;
-        m_Data.Height = properties.Height;
+        m_stData.strTitle = properties.strTitle;
+        m_stData.uWidth = properties.uWidth;
+        m_stData.uHeight = properties.uHeight;
 
-        RS_ENGINE_INFO("Creating window {0} ({1}, {2})", m_Data.Title, m_Data.Width, m_Data.Height);
+        RS_ENGINE_INFO("Creating window {0} ({1}, {2})", m_stData.strTitle, m_stData.uWidth, m_stData.uHeight);
 
         if (!m_bGLFW_INITIALIZED)
         {
@@ -36,10 +36,10 @@ namespace Rosset {
             m_bGLFW_INITIALIZED = true;
         }
 
-        m_pWindow = glfwCreateWindow((int)m_Data.Width, (int)m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
+        m_pWindow = glfwCreateWindow((int)m_stData.uWidth, (int)m_stData.uHeight, m_stData.strTitle.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(m_pWindow);
-        glfwSetWindowUserPointer(m_pWindow, &m_Data);
-        SetVSync(true);
+        glfwSetWindowUserPointer(m_pWindow, &m_stData);
+        SetVsync(true);
     }
 
     void WindowsWindow::Shutdown()
@@ -53,9 +53,9 @@ namespace Rosset {
         glfwSwapBuffers(m_pWindow);
     }
 
-    void WindowsWindow::SetVSync(bool enabled)
+    void WindowsWindow::SetVsync(bool bEnabled)
     {
-        if (enabled)
+        if (bEnabled)
         {
             glfwSwapInterval(1);
         }
@@ -64,6 +64,6 @@ namespace Rosset {
             glfwSwapInterval(0);
         }
 
-        m_Data.VSync = enabled;
+        m_stData.bVsync = bEnabled;
     }
 }
