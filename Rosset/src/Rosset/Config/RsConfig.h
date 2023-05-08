@@ -7,6 +7,10 @@
     #include <Windows.h>
 #endif
 
+#ifdef RS_DEBUG
+    #define RS_ENABLE_ASSERTS
+#endif
+
 #ifdef RS_PLATFORM_WINDOWS
     #ifdef RS_BUILD_DLL
         #define RS_API __declspec(dllexport)

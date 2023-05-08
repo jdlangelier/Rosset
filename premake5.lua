@@ -9,12 +9,15 @@ workspace "Rosset"
     IncludeDir["glfw"] =  "Rosset/ThirdParties/glfw/glfw/include"
     IncludeDir["spdlog"] =  "Rosset/ThirdParties/spdlog/include"
 
-    include "Rosset/ThirdParties/glfw"
+    group "Dependencies"
+        include "Rosset/ThirdParties/glfw"
+    group ""
 
 project "Rosset"
     location "Rosset"
     kind "SharedLib"
     language "C++"
+    staticruntime "off"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin/" .. outputdir .. "/%{prj.name}" .. "/obj")
@@ -48,23 +51,23 @@ project "Rosset"
             "RS_BUILD_DLL"
         }
 
-        postbuildcommands { ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox") }
+        postbuildcommands { ("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"") }
 
     filter "configurations:Debug"
-        defines {
-            "RS_DEBUG",
-            "RS_ENABLE_ASSERTS"
-        }
+        defines "RS_DEBUG"
+        runtime "Debug"
         symbols "On"
 
     filter "configurations:Release"
         defines "RS_RELEASE"
+        runtime "Release"
         optimize "On"
 
 project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
     language "C++"
+    staticruntime "off"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin/" .. outputdir .. "/%{prj.name}" .. "/obj")
@@ -90,12 +93,11 @@ project "Sandbox"
         defines "RS_PLATFORM_WINDOWS"
  
     filter "configurations:Debug"
-        defines {
-            "RS_DEBUG",
-            "RS_ENABLE_ASSERTS"
-        }
+        defines "RS_DEBUG"
+        runtime "Debug"
         symbols "On"
 
     filter "configurations:Release"
         defines "RS_RELEASE"
+        runtime "Release"
         optimize "On"
