@@ -2,10 +2,6 @@
 
 #include "Rosset/Config/RsConfig.h"
 
-#if 0
-#include <functional>
-#endif
-
 #define EVENT_TYPE_FUNCTIONS(type) static EventType GetStaticType() { return EventType::##type; }\
                                virtual EventType GetEventType() const override { return GetStaticType(); }\
                                virtual const char* GetName() const override { return #type; }
@@ -16,21 +12,22 @@ namespace Rosset
 {
     enum EventType
     {
-        KeyPressed = 1,
+        WindowClosed = 1,
+        KeyPressed,
         KeyReleased
     };
 
     enum EventCategory
     {
-        Input       = BIT(0),
-        Keyboard    = BIT(1)
+        CategoryApplication = BIT(0),
+        CategoryInput       = BIT(1),
+        CategoryKeyboard    = BIT(2)
     };
 
     class RS_API Event
     {
-#if 0
         friend class EventDispatcher;
-#endif
+
     public:
         virtual EventType GetEventType() const = 0;
         virtual const char* GetName() const = 0;
@@ -45,7 +42,7 @@ namespace Rosset
     protected:
         bool m_bIsHandled = false;
     };
-#if 0
+
     class EventDispatcher
     {
         template<typename T>
@@ -69,7 +66,6 @@ namespace Rosset
     private:
         Event& m_Event;
     };
-#endif
 
     inline std::ostream& operator<<(std::ostream& os, const Event& e)
     {

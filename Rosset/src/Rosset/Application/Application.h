@@ -3,6 +3,8 @@
 #include "Rosset/Config/RsConfig.h"
 
 #include "Rosset/Application/Window.h"
+#include "Rosset/Events/Event.h"
+#include "Rosset/Events/ApplicationEvent.h"
 
 namespace Rosset {
 
@@ -13,10 +15,14 @@ namespace Rosset {
         virtual ~Application();
 
         void Run();
+        void OnEvent(Event& event);
 
     private:
-        std::unique_ptr<Window> m_pWindow;
-        bool m_bRunning;
+        bool OnWindowClose(WindowClosedEvent event);
+
+    private:
+        std::unique_ptr<Window> m_Window;
+        bool m_Running;
     };
 
     Application* CreateApplication();
