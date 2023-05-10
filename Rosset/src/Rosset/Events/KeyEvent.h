@@ -9,7 +9,7 @@ namespace Rosset
     public:
         inline int GetKeyCode() const { return m_nKeyCode; }
 
-        EVENT_CATEGORY_FUNCTIONS(Keyboard | Input)
+        EVENT_CATEGORY_FUNCTIONS(CategoryKeyboard | CategoryInput)
 
     protected:
         KeyEvent(int nKeyCode)

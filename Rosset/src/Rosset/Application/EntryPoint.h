@@ -9,8 +9,6 @@ extern Rosset::Application* Rosset::CreateApplication();
 int main(int argc, char** argv)
 {
     Rosset::Log::Init();
-    RS_ENGINE_WARN("Logger!");
-    RS_APP_INFO("Client!");
 
     auto pApp = Rosset::CreateApplication();
     pApp->Run();

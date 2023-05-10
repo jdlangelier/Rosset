@@ -11,9 +11,10 @@ namespace Rosset {
         WindowsWindow(const WindowProperties& properties);
         virtual ~WindowsWindow();
 
-        inline unsigned int GetWidth() const override { return m_stData.uWidth; }
-        inline unsigned int GetHeight() const override { return m_stData.uHeight; }
-        inline bool IsVsync() const override { return m_stData.bVsync; }
+        inline void SetEventCallback(const EventCallbackFn& callback) { m_Data.EventCallback = callback; }
+        inline unsigned int GetWidth() const override { return m_Data.Width; }
+        inline unsigned int GetHeight() const override { return m_Data.Height; }
+        inline bool IsVsync() const override { return m_Data.Vsync; }
         
         void OnUpdate() override;
         void SetVsync(bool bEnabled) override;
@@ -23,18 +24,19 @@ namespace Rosset {
         void Shutdown();
 
     private:
-        GLFWwindow* m_pWindow;
+        GLFWwindow* m_Window;
 
         struct WindowData
         {
-            std::string strTitle;
-            unsigned int uWidth;
-            unsigned int uHeight;
-            bool bVsync;
+            std::string Title;
+            unsigned int Width;
+            unsigned int Height;
+            bool Vsync;
+            EventCallbackFn EventCallback;
         };
 
-        WindowData m_stData;
+        WindowData m_Data;
 
-        static bool m_bGLFW_INITIALIZED;
+        static bool m_GLFW_INITIALIZED;
     };
 }

@@ -2,8 +2,16 @@
 
 #include "Platform/WindowsWindow.h"
 
+#include "Rosset/Events/ApplicationEvent.h"
+
 namespace Rosset {
-    bool WindowsWindow::m_bGLFW_INITIALIZED = false;
+    bool WindowsWindow::m_GLFW_INITIALIZED = false;
+
+    static void GLFW_ERROR_CALLBACK(int error, const char* description)
+    {
+        RS_ENGINE_ERROR("GLFW ERROR ({0}): {1}", error, description);
+        RS_ASSERT(false, "GLFW ERROR ({0}): {1}", error, description);
+    }
 
     Window* Window::Create(const WindowProperties& properties)
     {
@@ -22,40 +30,48 @@ namespace Rosset {
 
     void WindowsWindow::Init(const WindowProperties& properties)
     {
-        m_stData.strTitle = properties.strTitle;
-        m_stData.uWidth = properties.uWidth;
-        m_stData.uHeight = properties.uHeight;
+        m_Data.Title = properties.Title;
+        m_Data.Width = properties.Width;
+        m_Data.Height = properties.Height;
 
-        RS_ENGINE_INFO("Creating window {0} ({1}, {2})", m_stData.strTitle, m_stData.uWidth, m_stData.uHeight);
+        RS_ENGINE_INFO("Creating window {0} ({1}, {2})", m_Data.Title, m_Data.Width, m_Data.Height);
 
-        if (!m_bGLFW_INITIALIZED)
+        if (!m_GLFW_INITIALIZED)
         {
             int nRes = glfwInit();
             RS_ENGINE_ASSERT(nRes, "Could not initialize GLFW!");
 
-            m_bGLFW_INITIALIZED = true;
+            glfwSetErrorCallback(GLFW_ERROR_CALLBACK);
+            m_GLFW_INITIALIZED = true;
         }
 
-        m_pWindow = glfwCreateWindow((int)m_stData.uWidth, (int)m_stData.uHeight, m_stData.strTitle.c_str(), nullptr, nullptr);
-        glfwMakeContextCurrent(m_pWindow);
-        glfwSetWindowUserPointer(m_pWindow, &m_stData);
+        m_Window = glfwCreateWindow((int)m_Data.Width, (int)m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
+        glfwMakeContextCurrent(m_Window);
+        glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVsync(true);
+
+        glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
+            {
+                WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+                WindowClosedEvent event;
+                data.EventCallback(event);
+            });
     }
 
     void WindowsWindow::Shutdown()
     {
-        glfwDestroyWindow(m_pWindow);
+        glfwDestroyWindow(m_Window);
     }
 
     void WindowsWindow::OnUpdate()
     {
         glfwPollEvents();
-        glfwSwapBuffers(m_pWindow);
+        glfwSwapBuffers(m_Window);
     }
 
-    void WindowsWindow::SetVsync(bool bEnabled)
+    void WindowsWindow::SetVsync(bool Enabled)
     {
-        if (bEnabled)
+        if (Enabled)
         {
             glfwSwapInterval(1);
         }
@@ -64,6 +80,6 @@ namespace Rosset {
             glfwSwapInterval(0);
         }
 
-        m_stData.bVsync = bEnabled;
+        m_Data.Vsync = Enabled;
     }
 }
