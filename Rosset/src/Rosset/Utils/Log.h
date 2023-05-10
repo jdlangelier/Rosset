@@ -6,7 +6,7 @@
 #include "spdlog/fmt/ostr.h"
 
 namespace Rosset {
-    class RS_API Log
+    class Log
     {
     public:
         static void Init();
