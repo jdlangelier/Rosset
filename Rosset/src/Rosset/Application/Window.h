@@ -5,7 +5,7 @@
 #include "Rosset/Events/Event.h"
 
 namespace Rosset {
-    class RS_API Window
+    class Window
     {
     public:
         struct WindowProperties

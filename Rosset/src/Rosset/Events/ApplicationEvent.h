@@ -4,7 +4,7 @@
 
 namespace Rosset
 {
-    class RS_API WindowClosedEvent : public Event
+    class WindowClosedEvent : public Event
     {
     public:
         WindowClosedEvent() {};

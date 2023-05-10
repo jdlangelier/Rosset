@@ -15,9 +15,10 @@ workspace "Rosset"
 
 project "Rosset"
     location "Rosset"
-    kind "SharedLib"
+    kind "StaticLib"
     language "C++"
-    staticruntime "off"
+    cppdialect "C++20"
+    staticruntime "on"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin/" .. outputdir .. "/%{prj.name}" .. "/obj")
@@ -42,16 +43,9 @@ project "Rosset"
     }
 
     filter "system:windows"
-        cppdialect "C++20"
-        staticruntime "On"
         systemversion "latest"
 
-        defines {
-            "RS_PLATFORM_WINDOWS",
-            "RS_BUILD_DLL"
-        }
-
-        postbuildcommands { ("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"") }
+        defines "RS_PLATFORM_WINDOWS"
 
     filter "configurations:Debug"
         defines "RS_DEBUG"
@@ -67,7 +61,8 @@ project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
     language "C++"
-    staticruntime "off"
+    cppdialect "C++20"
+    staticruntime "on"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin/" .. outputdir .. "/%{prj.name}" .. "/obj")
@@ -86,8 +81,6 @@ project "Sandbox"
     links "Rosset"
 
     filter "system:windows"
-        cppdialect "C++20"
-        staticruntime "On"
         systemversion "latest"
 
         defines "RS_PLATFORM_WINDOWS"

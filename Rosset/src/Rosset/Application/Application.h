@@ -8,7 +8,7 @@
 
 namespace Rosset {
 
-    class RS_API Application
+    class Application
     {
     public:
         Application();

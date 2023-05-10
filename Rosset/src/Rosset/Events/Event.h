@@ -24,7 +24,7 @@ namespace Rosset
         CategoryKeyboard    = BIT(2)
     };
 
-    class RS_API Event
+    class Event
     {
         friend class EventDispatcher;
 

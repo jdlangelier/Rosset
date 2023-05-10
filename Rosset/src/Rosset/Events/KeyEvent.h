@@ -4,7 +4,7 @@
 
 namespace Rosset
 {
-    class RS_API KeyEvent : public Event
+    class KeyEvent : public Event
     {
     public:
         inline int GetKeyCode() const { return m_nKeyCode; }
@@ -18,7 +18,7 @@ namespace Rosset
         int m_nKeyCode;
     };
 
-    class RS_API KeyPressedEvent : public KeyEvent
+    class KeyPressedEvent : public KeyEvent
     {
     public:
         KeyPressedEvent(int nKeyCode, int nRepeatCount)
@@ -40,7 +40,7 @@ namespace Rosset
         int m_nRepeatCount;
     };
 
-    class RS_API KeyReleasedEvent : public KeyEvent
+    class KeyReleasedEvent : public KeyEvent
     {
     public:
         KeyReleasedEvent(int nKeyCode)
