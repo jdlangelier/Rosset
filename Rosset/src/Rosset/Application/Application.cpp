@@ -19,18 +19,41 @@ namespace Rosset {
 
     void Application::OnEvent(Event& event)
     {
-        RS_ENGINE_TRACE("{0}", event);
-
         EventDispatcher dispatcher(event);
         dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+
+        for (auto index = m_LayerStack.end(); index != m_LayerStack.begin(); )
+        {
+            (*--index)->OnEvent(event);
+            if (event.IsHandled())
+            {
+                break;
+            }
+        }
     }
 
     void Application::Run()
     {
         while (m_Running)
         {
+
+            for (Layer* layer : m_LayerStack)
+            {
+                layer->OnUpdate();
+            }
+
             m_Window->OnUpdate();
         }
+    }
+
+    void Application::PushLayer(Layer* layer)
+    {
+        m_LayerStack.PushLayer(layer);
+    }
+
+    void Application::PushOverlay(Layer* overlay)
+    {
+        m_LayerStack.PushOverlay(overlay);
     }
 
     bool Application::OnWindowClose(WindowCloseEvent event)

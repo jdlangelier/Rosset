@@ -35,6 +35,9 @@ namespace Rosset
         friend class EventDispatcher;
 
     public:
+        bool IsHandled() { return m_IsHandled; }
+        void SetHandled() { m_IsHandled = true; }
+
         virtual EventType GetEventType() const = 0;
         virtual const char* GetName() const = 0;
         virtual int GetCategoryFlags() const = 0;
@@ -45,7 +48,7 @@ namespace Rosset
             return GetCategoryFlags() & category;
         }
 
-    protected:
+    private:
         bool m_IsHandled = false;
     };
 
