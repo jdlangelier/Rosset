@@ -18,7 +18,7 @@ namespace Rosset {
         void OnEvent(Event& event);
 
     private:
-        bool OnWindowClose(WindowClosedEvent event);
+        bool OnWindowClose(WindowCloseEvent event);
 
     private:
         std::unique_ptr<Window> m_Window;

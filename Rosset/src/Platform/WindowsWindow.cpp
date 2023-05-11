@@ -3,6 +3,8 @@
 #include "Platform/WindowsWindow.h"
 
 #include "Rosset/Events/ApplicationEvent.h"
+#include "Rosset/Events/KeyEvent.h"
+#include "Rosset/Events/MouseEvent.h"
 
 namespace Rosset {
     bool WindowsWindow::m_GLFW_INITIALIZED = false;
@@ -50,10 +52,86 @@ namespace Rosset {
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVsync(true);
 
+        glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
+            {
+                WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+                data.Width = width;
+                data.Height = height;
+
+                WindowResizeEvent event(width, height);
+                data.EventCallback(event);
+            });
+
         glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
             {
                 WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-                WindowClosedEvent event;
+                WindowCloseEvent event;
+                data.EventCallback(event);
+            });
+
+        glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+            {
+                WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+                switch (action)
+                {
+                    case GLFW_PRESS:
+                    {
+                        KeyPressEvent event(key, 0);
+                        data.EventCallback(event);
+                        break;
+                    }
+                    case GLFW_RELEASE:
+                    {
+                        KeyReleaseEvent event(key);
+                        data.EventCallback(event);
+                        break;
+                    }
+                    case GLFW_REPEAT:
+                    {
+                        KeyPressEvent event(key, 1);
+                        data.EventCallback(event);
+                        break;
+                    }
+                    default: { break; }
+                }
+            });
+
+        glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
+            {
+                WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+                switch (action)
+                {
+                    case GLFW_PRESS:
+                    {
+                        MouseButtonPressEvent event(button);
+                        data.EventCallback(event);
+                        break;
+                    }
+                    case GLFW_RELEASE:
+                    {
+                        MouseButtonReleaseEvent event(button);
+                        data.EventCallback(event);
+                        break;
+                    }
+                    default: { break; }
+                }
+            });
+
+        glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
+            {
+                WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+                MouseScrollEvent event(static_cast<float>(xOffset), static_cast<float>(yOffset));
+                data.EventCallback(event);
+            });
+
+        glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
+            {
+                WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+                MouseMoveEvent event(static_cast<float>(xPos), static_cast<float>(yPos));
                 data.EventCallback(event);
             });
     }

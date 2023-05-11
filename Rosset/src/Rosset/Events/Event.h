@@ -12,16 +12,22 @@ namespace Rosset
 {
     enum EventType
     {
-        WindowClosed = 1,
-        KeyPressed,
-        KeyReleased
+        WindowResize = 1,
+        WindowClose,
+        KeyPress,
+        KeyRelease,
+        MouseMove,
+        MouseScroll,
+        MouseButtonPress,
+        MouseButtonRelease
     };
 
     enum EventCategory
     {
         CategoryApplication = BIT(0),
         CategoryInput       = BIT(1),
-        CategoryKeyboard    = BIT(2)
+        CategoryKeyboard    = BIT(2),
+        CategoryMouse       = BIT(3)
     };
 
     class Event
@@ -40,7 +46,7 @@ namespace Rosset
         }
 
     protected:
-        bool m_bIsHandled = false;
+        bool m_IsHandled = false;
     };
 
     class EventDispatcher
@@ -57,7 +63,7 @@ namespace Rosset
         {
             if (m_Event.GetEventType() == T::GetStaticType())
             {
-                m_Event.m_bIsHandled = func(*(T*)&m_Event);
+                m_Event.m_IsHandled = func(*(T*)&m_Event);
                 return true;
             }
             return false;
