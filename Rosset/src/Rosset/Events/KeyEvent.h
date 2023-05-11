@@ -18,10 +18,10 @@ namespace Rosset
         int m_nKeyCode;
     };
 
-    class KeyPressedEvent : public KeyEvent
+    class KeyPressEvent : public KeyEvent
     {
     public:
-        KeyPressedEvent(int nKeyCode, int nRepeatCount)
+        KeyPressEvent(int nKeyCode, int nRepeatCount)
             : KeyEvent(nKeyCode),
               m_nRepeatCount(nRepeatCount) {}
 
@@ -30,29 +30,29 @@ namespace Rosset
         std::string ToString() const override
         {
             std::stringstream ss;
-            ss << "KeyPressedEvent: " << m_nKeyCode << " (" << m_nRepeatCount << " repeats)";
+            ss << "KeyPressEvent: " << m_nKeyCode << " (" << m_nRepeatCount << " repeats)";
             return ss.str();
         }
 
-        EVENT_TYPE_FUNCTIONS(KeyPressed)
+        EVENT_TYPE_FUNCTIONS(KeyPress)
 
     private:
         int m_nRepeatCount;
     };
 
-    class KeyReleasedEvent : public KeyEvent
+    class KeyReleaseEvent : public KeyEvent
     {
     public:
-        KeyReleasedEvent(int nKeyCode)
+        KeyReleaseEvent(int nKeyCode)
             : KeyEvent(nKeyCode) {}
 
         std::string ToString() const override
         {
             std::stringstream ss;
-            ss << "KeyReleasedEvent: " << m_nKeyCode;
+            ss << "KeyReleaseEvent: " << m_nKeyCode;
             return ss.str();
         }
 
-        EVENT_TYPE_FUNCTIONS(KeyReleased)
+        EVENT_TYPE_FUNCTIONS(KeyRelease)
     };
 }

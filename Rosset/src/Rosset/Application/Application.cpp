@@ -22,7 +22,7 @@ namespace Rosset {
         RS_ENGINE_TRACE("{0}", event);
 
         EventDispatcher dispatcher(event);
-        dispatcher.Dispatch<WindowClosedEvent>(BIND_EVENT_FN(OnWindowClose));
+        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
     }
 
     void Application::Run()
@@ -33,7 +33,7 @@ namespace Rosset {
         }
     }
 
-    bool Application::OnWindowClose(WindowClosedEvent event)
+    bool Application::OnWindowClose(WindowCloseEvent event)
     {
         m_Running = false;
         return true;

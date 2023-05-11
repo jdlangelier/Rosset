@@ -12,16 +12,22 @@ namespace Rosset
 {
     enum EventType
     {
-        WindowClosed = 1,
-        KeyPressed,
-        KeyReleased
+        WindowResize = 1,
+        WindowClose,
+        KeyPress,
+        KeyRelease,
+        MouseMove,
+        MouseScroll,
+        MouseButtonPress,
+        MouseButtonRelease
     };
 
     enum EventCategory
     {
         CategoryApplication = BIT(0),
         CategoryInput       = BIT(1),
-        CategoryKeyboard    = BIT(2)
+        CategoryKeyboard    = BIT(2),
+        CategoryMouse       = BIT(3)
     };
 
     class Event
