@@ -46,7 +46,7 @@ namespace Rosset
         }
 
     protected:
-        bool m_bIsHandled = false;
+        bool m_IsHandled = false;
     };
 
     class EventDispatcher
@@ -63,7 +63,7 @@ namespace Rosset
         {
             if (m_Event.GetEventType() == T::GetStaticType())
             {
-                m_Event.m_bIsHandled = func(*(T*)&m_Event);
+                m_Event.m_IsHandled = func(*(T*)&m_Event);
                 return true;
             }
             return false;
