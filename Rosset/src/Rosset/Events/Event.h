@@ -16,6 +16,7 @@ namespace Rosset
         WindowClose,
         KeyPress,
         KeyRelease,
+        KeyCharacter,
         MouseMove,
         MouseScroll,
         MouseButtonPress,

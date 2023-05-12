@@ -13,7 +13,7 @@ namespace Rosset {
         void OnDetatch() override;
         void OnUpdate() override;
         void OnEvent(Event& event) override;
-    
+
     private:
         float m_Time = 0.0f;
     };
