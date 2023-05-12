@@ -2,7 +2,7 @@
 
 #include "Rosset/Application/Window.h"
 
-#include "GLFW/glfw3.h"
+struct GLFWwindow;
 
 namespace Rosset {
     class WindowsWindow : public Window

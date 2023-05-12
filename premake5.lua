@@ -6,10 +6,12 @@ workspace "Rosset"
     outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
     IncludeDir = {}
+    IncludeDir["glad"] =  "Rosset/ThirdParties/glad/include"
     IncludeDir["glfw"] =  "Rosset/ThirdParties/glfw/glfw/include"
     IncludeDir["spdlog"] =  "Rosset/ThirdParties/spdlog/include"
 
     group "Dependencies"
+        include "Rosset/ThirdParties/glad"    
         include "Rosset/ThirdParties/glfw"
     group ""
 
@@ -33,11 +35,13 @@ project "Rosset"
 
     includedirs {
         "%{prj.name}/src",
+        "%{IncludeDir.glad}",
         "%{IncludeDir.glfw}",
         "%{IncludeDir.spdlog}"
     }
 
     links {
+        "glad",
         "GLFW",
         "opengl32.lib"
     }
@@ -74,6 +78,7 @@ project "Sandbox"
 
     includedirs {
         "Rosset/src",
+        "%{IncludeDir.glad}",
         "%{IncludeDir.glfw}",
         "%{IncludeDir.spdlog}"
     }

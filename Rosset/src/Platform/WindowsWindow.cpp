@@ -6,6 +6,9 @@
 #include "Rosset/Events/KeyEvent.h"
 #include "Rosset/Events/MouseEvent.h"
 
+#include "glad/gl.h"
+#include "GLFW/glfw3.h"
+
 namespace Rosset {
     bool WindowsWindow::m_GLFW_INITIALIZED = false;
 
@@ -49,6 +52,10 @@ namespace Rosset {
 
         m_Window = glfwCreateWindow((int)m_Data.Width, (int)m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);
+
+        int nRes = gladLoadGL(glfwGetProcAddress);
+        RS_ENGINE_ASSERT(nRes, "Could not initialize glad!");
+
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVsync(true);
 
