@@ -15,11 +15,15 @@ namespace Rosset {
         Application();
         virtual ~Application();
 
+        static Application& Get() { return *s_Instance; }
+
         void Run();
         void OnEvent(Event& event);
 
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* overlay);
+
+        Window& GetWindow() { return *m_Window; };
 
     private:
         bool OnWindowClose(WindowCloseEvent event);
@@ -28,6 +32,7 @@ namespace Rosset {
         std::unique_ptr<Window> m_Window;
         bool m_Running;
         LayerStack m_LayerStack;
+        static Application* s_Instance;
     };
 
     Application* CreateApplication();
