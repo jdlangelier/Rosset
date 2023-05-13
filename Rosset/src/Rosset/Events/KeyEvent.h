@@ -43,8 +43,8 @@ namespace Rosset
     class KeyReleaseEvent : public KeyEvent
     {
     public:
-        KeyReleaseEvent(int nKeyCode)
-            : KeyEvent(nKeyCode) {}
+        KeyReleaseEvent(int keyCode)
+            : KeyEvent(keyCode) {}
 
         std::string ToString() const override
         {
@@ -56,25 +56,19 @@ namespace Rosset
         EVENT_TYPE_FUNCTIONS(KeyRelease)
     };
 
-    class KeyCharacterEvent : public Event
+    class KeyTypeEvent : public KeyEvent
     {
     public:
-        KeyCharacterEvent(unsigned int character)
-            : m_Character(character) {}
-
-        unsigned int GetCharacter() { return m_Character; }
+        KeyTypeEvent(int keyCode)
+            : KeyEvent(keyCode) {}
 
         std::string ToString() const override
         {
             std::stringstream ss;
-            ss << "KeyCharacterEvent: " << m_Character;
+            ss << "KeyTypeEvent: " << m_KeyCode;
             return ss.str();
         }
 
-        EVENT_CATEGORY_FUNCTIONS(CategoryKeyboard | CategoryInput)
-        EVENT_TYPE_FUNCTIONS(KeyCharacter)
-
-    private:
-        unsigned int m_Character;
+        EVENT_TYPE_FUNCTIONS(KeyType)
     };
 }

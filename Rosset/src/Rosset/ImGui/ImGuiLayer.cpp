@@ -142,29 +142,7 @@ namespace Rosset {
         ImGuiIO& io = ImGui::GetIO();
         io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
         io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
-/*
-        io.KeyMap[ImGuiKey_Tab] = GLFW_KEY_TAB;
-        io.KeyMap[ImGuiKey_LeftArrow] = GLFW_KEY_LEFT;
-        io.KeyMap[ImGuiKey_RightArrow] = GLFW_KEY_RIGHT;
-        io.KeyMap[ImGuiKey_UpArrow] = GLFW_KEY_UP;
-        io.KeyMap[ImGuiKey_DownArrow] = GLFW_KEY_DOWN;
-        io.KeyMap[ImGuiKey_PageUp] = GLFW_KEY_PAGE_UP;
-        io.KeyMap[ImGuiKey_PageDown] = GLFW_KEY_PAGE_DOWN;
-        io.KeyMap[ImGuiKey_Home] = GLFW_KEY_HOME;
-        io.KeyMap[ImGuiKey_End] = GLFW_KEY_END;
-        io.KeyMap[ImGuiKey_Insert] = GLFW_KEY_INSERT;
-        io.KeyMap[ImGuiKey_Delete] = GLFW_KEY_DELETE;
-        io.KeyMap[ImGuiKey_Backspace] = GLFW_KEY_BACKSPACE;
-        io.KeyMap[ImGuiKey_Space] = GLFW_KEY_SPACE;
-        io.KeyMap[ImGuiKey_Enter] = GLFW_KEY_ENTER;
-        io.KeyMap[ImGuiKey_Escape] = GLFW_KEY_ESCAPE;
-        io.KeyMap[ImGuiKey_A] = GLFW_KEY_A;
-        io.KeyMap[ImGuiKey_C] = GLFW_KEY_C;
-        io.KeyMap[ImGuiKey_V] = GLFW_KEY_V;
-        io.KeyMap[ImGuiKey_X] = GLFW_KEY_X;
-        io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
-        io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
-        */
+
         ImGui_ImplOpenGL3_Init("#version 410");
     }
 
@@ -193,50 +171,95 @@ namespace Rosset {
 
     void ImGuiLayer::OnEvent(Event& event)
     {
+        EventDispatcher dispatcher(event);
+
+        dispatcher.Dispatch< WindowResizeEvent>(RS_BIND_EVENT_FUNCTION(ImGuiLayer::OnWindowResize));
+        dispatcher.Dispatch<KeyPressEvent>(RS_BIND_EVENT_FUNCTION(ImGuiLayer::OnKeyPress));
+        dispatcher.Dispatch<KeyReleaseEvent>(RS_BIND_EVENT_FUNCTION(ImGuiLayer::OnKeyRelease));
+        dispatcher.Dispatch<KeyTypeEvent>(RS_BIND_EVENT_FUNCTION(ImGuiLayer::OnKeyType));
+        dispatcher.Dispatch<MouseMoveEvent>(RS_BIND_EVENT_FUNCTION(ImGuiLayer::OnMouseMove));
+        dispatcher.Dispatch<MouseButtonPressEvent>(RS_BIND_EVENT_FUNCTION(ImGuiLayer::OnMouseButtonPress));
+        dispatcher.Dispatch<MouseButtonReleaseEvent>(RS_BIND_EVENT_FUNCTION(ImGuiLayer::OnMouseButtonRelease));
+        dispatcher.Dispatch<MouseScrollEvent>(RS_BIND_EVENT_FUNCTION(ImGuiLayer::OnMouseScroll));
+    }
+
+    bool ImGuiLayer::OnWindowResize(WindowResizeEvent& event)
+    {
         ImGuiIO& io = ImGui::GetIO();
 
-        switch (event.GetEventType())
-        {
-            case KeyPress:
-            {
-                ImGuiKey key = GlfwKeyToImGuiKey(static_cast<KeyPressEvent&>(event).GetKeyCode());
-                io.AddKeyEvent(key, true);
-                break;
-            }
-            case KeyRelease:
-            {
-                ImGuiKey key = GlfwKeyToImGuiKey(static_cast<KeyReleaseEvent&>(event).GetKeyCode());
-                io.AddKeyEvent(key, false);
-                break;
-            }
-            case KeyCharacter:
-            {
-                io.AddInputCharacter(static_cast<KeyCharacterEvent&>(event).GetCharacter());
-                break;
-            }
-            case MouseMove:
-            {
-                io.AddMousePosEvent(static_cast<float>(static_cast<MouseMoveEvent&>(event).GetX()),
-                                    static_cast<float>(static_cast<MouseMoveEvent&>(event).GetY()));
-                break;
-            }
-            case MouseButtonPress:
-            {
-                io.AddMouseButtonEvent(static_cast<MouseButtonPressEvent&>(event).GetMouseButton(), true);
-                break;
-            }
-            case MouseButtonRelease:
-            {
-                io.AddMouseButtonEvent(static_cast<MouseButtonReleaseEvent&>(event).GetMouseButton(), false);
-                break;
-            }
-            case MouseScroll:
-            {
-                io.AddMouseWheelEvent(static_cast<float>(static_cast<MouseScrollEvent&>(event).GetXOffset()),
-                                      static_cast<float>(static_cast<MouseScrollEvent&>(event).GetYOffset()));
-                break;
-            }
-            default: { break; }
-        }
+        io.DisplaySize = ImVec2(static_cast<float>(event.GetWidth()), static_cast<float>(event.GetHeight()));
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnKeyPress(KeyPressEvent& event)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        ImGuiKey key = GlfwKeyToImGuiKey(event.GetKeyCode());
+
+        // TODO: Implement modifier keys. Needs key polling.
+        // io.AddKeyEvent(ImGuiMod_Ctrl, (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) || (glfwGetKey(window, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS));
+        // io.AddKeyEvent(ImGuiMod_Shift, (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) || (glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS));
+        // io.AddKeyEvent(ImGuiMod_Alt, (glfwGetKey(window, GLFW_KEY_LEFT_ALT) == GLFW_PRESS) || (glfwGetKey(window, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS));
+        // io.AddKeyEvent(ImGuiMod_Super, (glfwGetKey(window, GLFW_KEY_LEFT_SUPER) == GLFW_PRESS) || (glfwGetKey(window, GLFW_KEY_RIGHT_SUPER) == GLFW_PRESS));
+
+        io.AddKeyEvent(key, true);
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnKeyRelease(KeyReleaseEvent& event)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        ImGuiKey key = GlfwKeyToImGuiKey(event.GetKeyCode());
+
+        io.AddKeyEvent(key, false);
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnKeyType(KeyTypeEvent& event)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+
+        io.AddInputCharacter(event.GetKeyCode());
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseMove(MouseMoveEvent& event)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+
+        io.AddMousePosEvent(event.GetX(), event.GetY());
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseButtonPress(MouseButtonPressEvent& event)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+
+        io.AddMouseButtonEvent(event.GetMouseButton(), true);
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseButtonRelease(MouseButtonReleaseEvent& event)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+
+        io.AddMouseButtonEvent(event.GetMouseButton(), false);
+        
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseScroll(MouseScrollEvent& event)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+
+        io.AddMouseWheelEvent(event.GetXOffset(),event.GetYOffset());
+
+        return false;
     }
 }

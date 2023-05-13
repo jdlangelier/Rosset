@@ -2,8 +2,6 @@
 
 #include "Rosset/Application/Application.h"
 
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
-
 namespace Rosset {
     Application* Application::s_Instance = nullptr;
 
@@ -14,7 +12,7 @@ namespace Rosset {
         s_Instance = this;
 
         m_Window = std::unique_ptr<Window>(Window::Create());
-        m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+        m_Window->SetEventCallback(RS_BIND_EVENT_FUNCTION(Application::OnEvent));
     }
 
     Application::~Application()
@@ -24,7 +22,7 @@ namespace Rosset {
     void Application::OnEvent(Event& event)
     {
         EventDispatcher dispatcher(event);
-        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+        dispatcher.Dispatch<WindowCloseEvent>(RS_BIND_EVENT_FUNCTION(Application::OnWindowClose));
 
         for (auto index = m_LayerStack.end(); index != m_LayerStack.begin(); )
         {
