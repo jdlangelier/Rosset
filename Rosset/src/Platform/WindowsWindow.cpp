@@ -76,7 +76,7 @@ namespace Rosset {
                 data.EventCallback(event);
             });
 
-        glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+        glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int keyCode, int scanCode, int action, int mods)
             {
                 WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
@@ -84,24 +84,33 @@ namespace Rosset {
                 {
                     case GLFW_PRESS:
                     {
-                        KeyPressEvent event(key, 0);
+                        KeyPressEvent event(keyCode, 0);
                         data.EventCallback(event);
                         break;
                     }
                     case GLFW_RELEASE:
                     {
-                        KeyReleaseEvent event(key);
+                        KeyReleaseEvent event(keyCode);
                         data.EventCallback(event);
                         break;
                     }
                     case GLFW_REPEAT:
                     {
-                        KeyPressEvent event(key, 1);
+                        KeyPressEvent event(keyCode, 1);
                         data.EventCallback(event);
                         break;
                     }
                     default: { break; }
                 }
+            });
+
+        glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keyCode)
+            {
+                WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+                KeyTypeEvent event(keyCode);
+                data.EventCallback(event);
+
             });
 
         glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)

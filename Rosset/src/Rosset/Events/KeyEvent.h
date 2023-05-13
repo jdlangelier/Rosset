@@ -7,7 +7,7 @@ namespace Rosset
     class KeyEvent : public Event
     {
     public:
-        inline int GetKeyCode() const { return m_KeyCode; }
+        int GetKeyCode() const { return m_KeyCode; }
 
         EVENT_CATEGORY_FUNCTIONS(CategoryKeyboard | CategoryInput)
 
@@ -21,11 +21,11 @@ namespace Rosset
     class KeyPressEvent : public KeyEvent
     {
     public:
-        KeyPressEvent(int nKeyCode, int nRepeatCount)
-            : KeyEvent(nKeyCode),
-              m_RepeatCount(nRepeatCount) {}
+        KeyPressEvent(int keyCode, int repeatCount)
+            : KeyEvent(keyCode),
+              m_RepeatCount(repeatCount) {}
 
-        inline int GetRepeatCount() const { return m_RepeatCount; }
+        int GetRepeatCount() const { return m_RepeatCount; }
 
         std::string ToString() const override
         {
@@ -43,8 +43,8 @@ namespace Rosset
     class KeyReleaseEvent : public KeyEvent
     {
     public:
-        KeyReleaseEvent(int nKeyCode)
-            : KeyEvent(nKeyCode) {}
+        KeyReleaseEvent(int keyCode)
+            : KeyEvent(keyCode) {}
 
         std::string ToString() const override
         {
@@ -54,5 +54,21 @@ namespace Rosset
         }
 
         EVENT_TYPE_FUNCTIONS(KeyRelease)
+    };
+
+    class KeyTypeEvent : public KeyEvent
+    {
+    public:
+        KeyTypeEvent(int keyCode)
+            : KeyEvent(keyCode) {}
+
+        std::string ToString() const override
+        {
+            std::stringstream ss;
+            ss << "KeyTypeEvent: " << m_KeyCode;
+            return ss.str();
+        }
+
+        EVENT_TYPE_FUNCTIONS(KeyType)
     };
 }

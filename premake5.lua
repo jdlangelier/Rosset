@@ -8,11 +8,13 @@ workspace "Rosset"
     IncludeDir = {}
     IncludeDir["glad"] =  "Rosset/ThirdParties/glad/include"
     IncludeDir["glfw"] =  "Rosset/ThirdParties/glfw/glfw/include"
+    IncludeDir["imgui"] =  "Rosset/ThirdParties/imgui/imgui"
     IncludeDir["spdlog"] =  "Rosset/ThirdParties/spdlog/include"
 
     group "Dependencies"
         include "Rosset/ThirdParties/glad"    
         include "Rosset/ThirdParties/glfw"
+        include "Rosset/ThirdParties/imgui"
     group ""
 
 project "Rosset"
@@ -37,12 +39,14 @@ project "Rosset"
         "%{prj.name}/src",
         "%{IncludeDir.glad}",
         "%{IncludeDir.glfw}",
+        "%{IncludeDir.imgui}",
         "%{IncludeDir.spdlog}"
     }
 
     links {
         "glad",
         "GLFW",
+        "imgui",
         "opengl32.lib"
     }
 
@@ -80,6 +84,7 @@ project "Sandbox"
         "Rosset/src",
         "%{IncludeDir.glad}",
         "%{IncludeDir.glfw}",
+        "%{IncludeDir.imgui}",
         "%{IncludeDir.spdlog}"
     }
 
