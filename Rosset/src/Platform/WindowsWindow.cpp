@@ -6,8 +6,8 @@
 #include "Rosset/Events/KeyEvent.h"
 #include "Rosset/Events/MouseEvent.h"
 
-#include "glad/gl.h"
-#include "GLFW/glfw3.h"
+#include <glad/gl.h>
+#include <GLFW/glfw3.h>
 
 namespace Rosset {
     bool WindowsWindow::m_GLFW_INITIALIZED = false;
