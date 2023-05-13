@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Rosset/Config/RsConfig.h"
-
 #include "Rosset/Application/Window.h"
 #include "Rosset/Events/Event.h"
 #include "Rosset/Events/ApplicationEvent.h"

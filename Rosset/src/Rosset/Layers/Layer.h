@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Rosset/Config/RsConfig.h"
-
 #include "Rosset/Events/Event.h"
 
 namespace Rosset {
