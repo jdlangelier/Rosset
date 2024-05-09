@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Rosset/Config/RsConfig.h"
-
 #include "Rosset/Layers/Layer.h"
 
 namespace Rosset {

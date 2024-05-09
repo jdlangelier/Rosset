@@ -10,12 +10,14 @@ public:
 
     void OnUpdate() override
     {
-        RS_APP_INFO("SampleLayer::OnUpdate");
+        if (Rosset::Input::IsKeyPressed(RS_KEY_TAB))
+        {
+            RS_APP_TRACE("Tab key is pressed!");
+        }
     }
 
     void OnEvent(Rosset::Event& event) override
     {
-        RS_APP_INFO("SampleLayer::OnEvent: {0}", event);
     }
 };
 

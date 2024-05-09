@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Rosset/Config/RsConfig.h"
-
 #include "Rosset/Events/Event.h"
 
 namespace Rosset {
@@ -32,5 +30,7 @@ namespace Rosset {
         virtual unsigned int GetHeight() const = 0;
         virtual void SetVsync(bool Enabled) = 0;
         virtual bool IsVsync() const = 0;
+
+        virtual void* GetNativeWindow() const = 0;
     };
 }

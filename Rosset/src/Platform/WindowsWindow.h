@@ -11,13 +11,15 @@ namespace Rosset {
         WindowsWindow(const WindowProperties& properties);
         virtual ~WindowsWindow();
 
-        inline void SetEventCallback(const EventCallbackFn& callback) { m_Data.EventCallback = callback; }
-        inline unsigned int GetWidth() const override { return m_Data.Width; }
-        inline unsigned int GetHeight() const override { return m_Data.Height; }
-        inline bool IsVsync() const override { return m_Data.Vsync; }
+        virtual void SetEventCallback(const EventCallbackFn& callback) { m_Data.EventCallback = callback; }
+        virtual unsigned int GetWidth() const override { return m_Data.Width; }
+        virtual unsigned int GetHeight() const override { return m_Data.Height; }
+        virtual bool IsVsync() const override { return m_Data.Vsync; }
         
-        void OnUpdate() override;
-        void SetVsync(bool bEnabled) override;
+        virtual void OnUpdate() override;
+        virtual void SetVsync(bool bEnabled) override;
+
+        virtual void* GetNativeWindow() const override { return m_Window; }
 
     private:
         void Init(const WindowProperties& properties);

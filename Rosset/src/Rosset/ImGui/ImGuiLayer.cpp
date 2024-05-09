@@ -2,11 +2,12 @@
 
 #include "Rosset/ImGui/ImGuiLayer.h"
 
-#include "imgui.h"
-#include "backends/imgui_impl_opengl3.h"
-#include "GLFW/glfw3.h"
+#include <imgui.h>
+#include <backends/imgui_impl_opengl3.h>
+#include <GLFW/glfw3.h>
 
 #include "Rosset/Application/Application.h"
+#include "Rosset/Application/Input.h"
 #include "Rosset/Events/KeyEvent.h"
 #include "Rosset/Events/MouseEvent.h"
 
@@ -197,11 +198,10 @@ namespace Rosset {
         ImGuiIO& io = ImGui::GetIO();
         ImGuiKey key = GlfwKeyToImGuiKey(event.GetKeyCode());
 
-        // TODO: Implement modifier keys. Needs key polling.
-        // io.AddKeyEvent(ImGuiMod_Ctrl, (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) || (glfwGetKey(window, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS));
-        // io.AddKeyEvent(ImGuiMod_Shift, (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) || (glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS));
-        // io.AddKeyEvent(ImGuiMod_Alt, (glfwGetKey(window, GLFW_KEY_LEFT_ALT) == GLFW_PRESS) || (glfwGetKey(window, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS));
-        // io.AddKeyEvent(ImGuiMod_Super, (glfwGetKey(window, GLFW_KEY_LEFT_SUPER) == GLFW_PRESS) || (glfwGetKey(window, GLFW_KEY_RIGHT_SUPER) == GLFW_PRESS));
+        io.AddKeyEvent(ImGuiMod_Ctrl, Input::IsKeyPressed(GLFW_KEY_LEFT_CONTROL) || Input::IsKeyPressed(GLFW_KEY_RIGHT_CONTROL));
+        io.AddKeyEvent(ImGuiMod_Shift, Input::IsKeyPressed(GLFW_KEY_LEFT_SHIFT) || Input::IsKeyPressed(GLFW_KEY_RIGHT_SHIFT));
+        io.AddKeyEvent(ImGuiMod_Alt, Input::IsKeyPressed(GLFW_KEY_LEFT_ALT) || Input::IsKeyPressed(GLFW_KEY_RIGHT_ALT));
+        io.AddKeyEvent(ImGuiMod_Super, Input::IsKeyPressed(GLFW_KEY_LEFT_SUPER) || Input::IsKeyPressed(GLFW_KEY_RIGHT_SUPER));
 
         io.AddKeyEvent(key, true);
 
