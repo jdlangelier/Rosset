@@ -8,6 +8,7 @@ workspace "Rosset"
     IncludeDir = {}
     IncludeDir["glad"] =  "Rosset/ThirdParties/glad/include"
     IncludeDir["glfw"] =  "Rosset/ThirdParties/glfw/glfw/include"
+    IncludeDir["glm"] =  "Rosset/ThirdParties/glm"
     IncludeDir["imgui"] =  "Rosset/ThirdParties/imgui/imgui"
     IncludeDir["spdlog"] =  "Rosset/ThirdParties/spdlog/include"
 
@@ -39,6 +40,7 @@ project "Rosset"
         "%{prj.name}/src",
         "%{IncludeDir.glad}",
         "%{IncludeDir.glfw}",
+        "%{IncludeDir.glm}",
         "%{IncludeDir.imgui}",
         "%{IncludeDir.spdlog}"
     }
@@ -84,6 +86,7 @@ project "Sandbox"
         "Rosset/src",
         "%{IncludeDir.glad}",
         "%{IncludeDir.glfw}",
+        "%{IncludeDir.glm}",
         "%{IncludeDir.imgui}",
         "%{IncludeDir.spdlog}"
     }
