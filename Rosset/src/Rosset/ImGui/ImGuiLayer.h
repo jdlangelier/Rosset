@@ -3,14 +3,6 @@
 #include "Rosset/Layers/Layer.h"
 
 namespace Rosset {
-    class WindowResizeEvent;
-    class KeyPressEvent;
-    class KeyReleaseEvent;
-    class KeyTypeEvent;
-    class MouseMoveEvent;
-    class MouseButtonPressEvent;
-    class MouseButtonReleaseEvent;
-    class MouseScrollEvent;
 
     class ImGuiLayer : public Layer
     {
@@ -18,20 +10,12 @@ namespace Rosset {
         ImGuiLayer();
         virtual ~ImGuiLayer();
 
-        void OnAttach() override;
-        void OnDetatch() override;
-        void OnUpdate() override;
-        void OnEvent(Event& event) override;
+        virtual void OnAttach() override;
+        virtual void OnDetatch() override;
+        virtual void OnImGuiRender() override;
 
-    private:
-        bool OnWindowResize(WindowResizeEvent& event);
-        bool OnKeyPress(KeyPressEvent& event);
-        bool OnKeyRelease(KeyReleaseEvent& event);
-        bool OnKeyType(KeyTypeEvent& event);
-        bool OnMouseMove(MouseMoveEvent& event);
-        bool OnMouseButtonPress(MouseButtonPressEvent& event);
-        bool OnMouseButtonRelease(MouseButtonReleaseEvent& event);
-        bool OnMouseScroll(MouseScrollEvent& event);
+        void Begin();
+        void End();
 
     private:
         float m_Time = 0.0f;
