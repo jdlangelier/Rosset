@@ -19,12 +19,14 @@ namespace Rosset {
     void LayerStack::PushLayer(Layer* layer)
     {
         m_Layers.emplace(m_Layers.begin() + m_LayerInsertIndex, layer);
+        layer->OnAttach();
         m_LayerInsertIndex++;
     }
 
     void LayerStack::PushOverlay(Layer* overlay)
     {
         m_Layers.emplace_back(overlay);
+        overlay->OnAttach();
     }
 
     void LayerStack::PopLayer(Layer* layer)
@@ -34,6 +36,7 @@ namespace Rosset {
         if (index != m_Layers.end())
         {
             m_Layers.erase(index);
+            layer->OnDetatch();
             m_LayerInsertIndex--;
         }
     }
@@ -44,6 +47,7 @@ namespace Rosset {
 
         if (index != m_Layers.end())
         {
+            overlay->OnDetatch();
             m_Layers.erase(index);
         }
     }
