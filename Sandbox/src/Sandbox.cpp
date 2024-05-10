@@ -27,7 +27,6 @@ public:
     Sandbox()
     {
         PushLayer(new SampleLayer());
-        PushOverlay(new Rosset::ImGuiLayer());
     }
 
     ~Sandbox()

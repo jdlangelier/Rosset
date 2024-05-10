@@ -3,6 +3,7 @@
 #include "Rosset/Application/Window.h"
 #include "Rosset/Events/Event.h"
 #include "Rosset/Events/ApplicationEvent.h"
+#include "Rosset/ImGui/ImGuiLayer.h"
 #include "Rosset/Layers/LayerStack.h"
 
 namespace Rosset {
@@ -28,6 +29,7 @@ namespace Rosset {
 
     private:
         std::unique_ptr<Window> m_Window;
+        ImGuiLayer* m_ImGuiLayer;
         bool m_Running;
         LayerStack m_LayerStack;
         static Application* s_Instance;
