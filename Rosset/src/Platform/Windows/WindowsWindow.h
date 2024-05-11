@@ -3,6 +3,7 @@
 #include "Rosset/Application/Window.h"
 
 struct GLFWwindow;
+class RendererContext;
 
 namespace Rosset {
     class WindowsWindow : public Window
@@ -27,6 +28,7 @@ namespace Rosset {
 
     private:
         GLFWwindow* m_Window;
+        RendererContext* m_Context;
 
         struct WindowData
         {

@@ -1,6 +1,6 @@
 #include "Rosset/Config/RsConfig.h"
 
-#include "Platform/WindowsInput.h"
+#include "Platform/Windows/WindowsInput.h"
 
 #include "Rosset/Application/Application.h"
 
