@@ -1,6 +1,9 @@
 # Binaries
 **/bin/
 
+# VS Code files and folder
+.vscode/
+
 # Visual Studio files and folder
 .vs/
 **.sln
@@ -11,3 +14,4 @@
 
 **imgui.ini
 
+scripts/__pycache__
