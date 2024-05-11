@@ -1,12 +1,12 @@
 #include "Rosset/Config/RsConfig.h"
 
-#include "Platform/WindowsWindow.h"
+#include "Platform/OpenGL/OpenGLContext.h"
+#include "Platform/Windows/WindowsWindow.h"
 
 #include "Rosset/Events/ApplicationEvent.h"
 #include "Rosset/Events/KeyEvent.h"
 #include "Rosset/Events/MouseEvent.h"
 
-#include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
 namespace Rosset {
@@ -51,10 +51,9 @@ namespace Rosset {
         }
 
         m_Window = glfwCreateWindow((int)m_Data.Width, (int)m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
-        glfwMakeContextCurrent(m_Window);
-
-        int nRes = gladLoadGL(glfwGetProcAddress);
-        RS_ENGINE_ASSERT(nRes, "Could not initialize glad!");
+        
+        m_Context = new OpenGLContext(m_Window);
+        m_Context->Init();
 
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVsync(true);
@@ -160,7 +159,7 @@ namespace Rosset {
     void WindowsWindow::OnUpdate()
     {
         glfwPollEvents();
-        glfwSwapBuffers(m_Window);
+        m_Context->SwapBuffers();
     }
 
     void WindowsWindow::SetVsync(bool Enabled)

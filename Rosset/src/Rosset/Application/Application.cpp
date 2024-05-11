@@ -1,5 +1,8 @@
 #include "Rosset/Config/RsConfig.h"
 
+// TODO: Temporarly setting the background color
+#include <../ThirdParties/glad/include/glad/gl.h>
+
 #include "Rosset/Application/Application.h"
 
 namespace Rosset {
@@ -41,6 +44,9 @@ namespace Rosset {
     {
         while (m_Running)
         {
+            // TODO: Temporarly setting the background color
+            glClearColor(1, 0, 1, 1);
+            glClear(GL_COLOR_BUFFER_BIT);
 
             for (Layer* layer : m_LayerStack)
             {
